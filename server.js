@@ -12,7 +12,9 @@ wss.on('connection', function connection(conn) {
 		// discard messages (for now?)
 	});
 
-	connections.push(conn);
+	connections = [conn];
+	// In the future, if we want multiple connections, we can
+	//connections.push(conn);
 });
 
 let buses = [];
@@ -24,7 +26,7 @@ async function updateBusLocations() {
 	for (let bus of relevantVehicles) {
 		console.log(`Sending update for bus ${bus}`);
 		for (let conn of connections) {
-			const update = '' // TODO
+			const update = '';
 			conn.send(update);
 		}
 	}
