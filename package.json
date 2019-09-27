@@ -10,7 +10,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.1",
     "node-fetch": "^2.6.0",
     "ws": "^7.1.2"
   }
