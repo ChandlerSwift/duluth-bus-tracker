@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from flask import Flask, send_file
+from flask import Flask, send_file, redirect
 import map_updater
 import threading
 import time
@@ -10,7 +10,7 @@ MAP_UPDATE_INTERVAL = 1 # second
 
 @app.route('/')
 def index():
-	redirect('static/')
+	return redirect('static/')
 
 next_call = time.time() + MAP_UPDATE_INTERVAL
 def schedule_next_update():
