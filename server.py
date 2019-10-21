@@ -1,25 +1,30 @@
-import json
+#!/usr/bin/python3
+from flask import Flask, send_file
+import map_updater
 import threading
-from socket import *
-import sys
-import requests
-from urllib import request
+import time
 
-# Idk how many of these we will actually need, we just trying stuff
+app = Flask(__name__)
 
-HOST = ''
-PORT = 8989
+MAP_UPDATE_INTERVAL = 1 # second
 
-VEHICLE_POSITION_DATA_URL = r'http://duluthtransit.com/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.json'
+@app.route('/')
+def index():
+	redirect('static/')
 
-def download_file_info(VEHICLE_POSITION_DATA_URL):
-	file_open = request.urlopen(VEHICLE_POSITION_DATA_URL) # Open the file
+next_call = time.time() + MAP_UPDATE_INTERVAL
+def schedule_next_update():
+	map_updater.update_map()
 
-	file_info = file_open.read() # Read the file
+	# schedule next update
+	global next_call
+	next_call += MAP_UPDATE_INTERVAL
+	threading.Timer(next_call - time.time(), schedule_next_update).start()
 
-	file_info_str = str(file_info) # convert to string
+@app.route('/api/show_route/<int:route>')
+def show_route(route: int):
+	map_updater.show_route(route)
 
-	file_lines = file_info_str.split('\\n') # Actually make it readable
-
-	
-
+if __name__ == '__main__':
+	schedule_next_update()
+	app.run()
