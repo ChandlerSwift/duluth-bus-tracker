@@ -1,5 +1,7 @@
 from typing import List
 
+VEHICLE_POSITION_DATA_URL = 'http://duluthtransit.com/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.json'
+
 def get_buses(routes: List[str]):
     """
     Returns a list of bus objects and their locations. The argument routes
