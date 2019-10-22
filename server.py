@@ -12,7 +12,7 @@ RELEVANT_BUSES = ["6", "11", "11K", "13", "23"]
 
 @app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path:path>')
-def index():
+def index(path):
 	return send_from_directory('static', path)
 
 next_call = time.time() + MAP_UPDATE_INTERVAL
