@@ -1,8 +1,9 @@
-# Duluth Bus Tracker 
-### (For Keeping Track of Buses in Duluth)
+# Duluth Transit
 
-Backend for the sign that is going to display where the buses are in Duluth!
+More content in the web-watch branch.
 
-Raspberry pi display uses ui.html to display information on bus times
+### `retrieve.sh`
+Downloads and extracts route data from Duluth Transit's site.
 
-[DTA bus API info](https://www.duluthtransit.com/home/doing-business/developer-resources/)
+
+
