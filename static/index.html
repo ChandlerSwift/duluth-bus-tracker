@@ -78,30 +78,6 @@
 				<div class="bus-id">23</div>
 				<div class="bus-info" id="bus-info-6">Maroon Line: 7:05 AM (2m late)<br>Gold Line: 7:12 AM (on time)</div>
 		</div>
-		<script>
-			// Update clock
-			setInterval(function () {
-				document.getElementById('clock').innerHTML = new Date().toLocaleTimeString();
-			}, 100);
-
-			let is_route_currently_selected = false;
-
-			for (let route_div of document.getElementsByClassName('route')) {
-				route_div.onclick = function(e) {
-					if (is_route_currently_selected) {
-						for (let route_div of document.getElementsByClassName('route')) {
-							route_div.style.opacity = 1.0;
-						}
-					} else { // select the route
-						for (let other_route_div of document.getElementsByClassName('route')) {
-							if (route_div == other_route_div)
-								continue;
-							other_route_div.style.opacity = 0.1;
-						}
-					}
-					is_route_currently_selected = !is_route_currently_selected;
-				}
-			}
-		</script>
+		<script src="/index.js"></script>
 	</body>
 </html>
