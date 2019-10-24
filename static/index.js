@@ -6,9 +6,18 @@ function updateClock() {
 }
 
 async function updateRoutes() {
+    // NONE OF THIS WORKS. We're confusing buses with upcoming stop times. Out of scope?
     let res = await fetch('/api/get-buses');
-    let bus_info = await res.json();
-    console.log(bus_info);
+    let buses = await res.json();
+    for (let bus of buses) {
+        let bus_info_div;
+        for (let el of document.getElementsByClassName("bus-id")) {
+            if (el.innerHTML == bus.route) {
+                bus_div = el.parentElement.getElementsByClassName("bus-info")[0];
+            }
+        }
+        bus_info_div.innerHTML = `to_downtown: ${"6:34 PM"} (${"2m late"})<br>from_downtown: ${"6:38 PM"} (${"on time"})`
+    }
 }
 
 // Select current routes
