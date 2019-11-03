@@ -1,4 +1,5 @@
 import api_consumer
+import .display
 
 ALL_ROUTES = ["6", "11", "13", "23"]
 
@@ -58,14 +59,12 @@ def update_map():
     for bus in api_consumer.get_buses(shown_routes):
         bus_location = location(bus.lat, bus.long)
         show_stop(find_nearest_stop(bus_location))
-    pass
 
 def clear_map():
-    pass # TODO
+    display.clear()
 
 def show_stop(stop, brightness: float = 1.0):
-    # write_led(stop.led, brightness)
-    pass # TODO
+    display.show(stop.led, (255 * brightness, 255 * brightness, 255 * brightness))
 
 def show_route(route: str):
     global shown_routes
