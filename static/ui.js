@@ -1,13 +1,10 @@
-setInterval(updateClock, 100);
-setInterval(updateRoutes, 5000);
-
 function updateClock() {
     document.getElementById('clock').innerHTML = new Date().toLocaleTimeString();
 }
 
 async function updateRoutes() {
     // NONE OF THIS WORKS. We're confusing buses with upcoming stop times. Out of scope?
-    let res = await fetch('/api/get-buses');
+    let res = await fetch('/api/get-upcoming-buses');
     let buses = await res.json();
     for (let bus of buses) {
         let bus_info_div;
@@ -26,10 +23,12 @@ let is_route_currently_selected = false;
 for (let route_div of document.getElementsByClassName('route')) {
     route_div.onclick = function(e) {
         if (is_route_currently_selected) {
+            fetch('/api/show-all-routes');
             for (let route_div of document.getElementsByClassName('route')) {
                 route_div.style.opacity = 1.0;
             }
         } else { // select the route
+            fetch('/api/show-route/' + route_div.dataset['route']);
             for (let other_route_div of document.getElementsByClassName('route')) {
                 if (route_div == other_route_div)
                     continue;
