@@ -26,10 +26,11 @@ def schedule_next_update():
 
 @app.route('/api/get-upcoming-departures')
 def get_upcoming_departures():
+	return "[]"
 	return api_consumer.get_upcoming_departures(RELEVANT_BUSES)
 
-@app.route('/api/show_route/<int:route>')
-def show_route(route: int):
+@app.route('/api/show_route/<str:route>')
+def show_route(route: str):
 	map_updater.show_route(route)
 
 @app.route('/api/show_all_routes')
