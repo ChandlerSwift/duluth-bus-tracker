@@ -65,7 +65,7 @@ def clear_map():
     display.clear()
 
 def show_stop(stop, brightness: float = 1.0):
-    display.show(stop.led, (255 * brightness, 255 * brightness, 255 * brightness))
+    display.show(stop['led'], (255 * brightness, 255 * brightness, 255 * brightness))
 
 def show_route(route: str):
     global shown_routes
