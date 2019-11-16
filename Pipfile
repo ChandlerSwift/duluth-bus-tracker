@@ -10,5 +10,5 @@ pylint = "*"
 flask = "*"
 rpi-ws281x = "*"
 
-[requires]
-python_version = "3.7"
+#[requires]
+#python_version = "3.7"

@@ -1,5 +1,5 @@
 import api_consumer
-import .display
+import map_updater.display
 
 ALL_ROUTES = ["6", "11", "13", "23"]
 
@@ -20,7 +20,7 @@ route_stops = {
 # }
 
 
-class location(Object):
+class location(object):
     def __init__(self, lat, long):
         self.lat = lat
         self.long = long
@@ -53,7 +53,7 @@ def update_map():
     # TODO: set colors
 
     # If we're only showing one map, highlight all the stops
-    if len(shown_maps) is 1:
+    if len(shown_routes) is 1:
         for stop in route_stops[shown_routes[0]]:
             show_stop(stop, 0.3)
     for bus in api_consumer.get_buses(shown_routes):
