@@ -55,11 +55,11 @@ def update_map():
     # If we're only showing one map, highlight all the stops
     if len(shown_routes) is 1:
         for stop in route_stops[shown_routes[0]]:
-            show_stop(stop.led, 0.1)
+            show_stop(stop, 0.1)
     #for bus in api_consumer.get_buses(shown_routes):
     #    bus_location = location(bus.lat, bus.long)
     #    show_stop(find_nearest_stop(bus_location))
-    show_stop(20)
+    show_stop({"led":20})
 
 def clear_map():
     display.clear()
