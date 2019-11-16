@@ -1,87 +1,96 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Duluth Transit Bus Tracker UI</title>
-		<style>
-			* {
-				user-select: none;
-				padding: 0;
-				margin: 0;
-			}
-			html {
-				height: 100%;
-				font-family: sans-serif;
-				font-size: 20px;
-			}
 
-			#header {
-				height: 1.1em;
-				color: #fff;
-				background-color: #000;
-			}
-			.right { text-align: right; }
+<head>
+	<title>Duluth Transit Bus Tracker UI</title>
+	<style>
+		* {
+			user-select: none;
+			padding: 0;
+			margin: 0;
+		}
 
-			.route {
-				height: calc(25% - .25em);
-			}
+		html {
+			height: 100%;
+			font-family: sans-serif;
+			font-size: 20px;
+		}
 
-			.bus-id {
-				font-size: 4em;
-				float: left;
-				height: 100%;
-				display: flex; 
-				align-items: center;
-				justify-content: flex-end;
-				width: 100px;
-				padding-right: 20px;
-			}
+		#header {
+			height: 1.1em;
+			color: #fff;
+			background-color: #000;
+		}
 
-			.bus-info {
-				height: 100%;
-				margin: auto;
-				display: flex; 
-				align-items: center;
-			}
+		.right {
+			text-align: right;
+		}
 
-			[data-route="6"] {
-				background-color: rgba(0, 0, 128, 0.2);
-			}
+		.route {
+			height: calc(25% - .25em);
+		}
 
-			[data-route="11"] {
-				background-color: rgba(235, 235, 35, 0.2);
-			}
+		.bus-id {
+			font-size: 4em;
+			float: left;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			width: 100px;
+			padding-right: 20px;
+		}
 
-			[data-route="13"] {
-				background-color: rgba(34, 139, 34, 0.2);
-			}
+		.bus-info {
+			height: 100%;
+			margin: auto;
+			display: flex;
+			align-items: center;
+		}
 
-			[data-route="23"] {
-				background-color: rgba(128, 0, 0, 0.2);
-			}
-		</style>
-	</head>
-	<body style="height:100%; width: 480px;">
-		<div id="header"><div id="clock" class="right">Loading time...</a></div></div>
-		<div class="route" data-route="6">
-				<div class="bus-id">6</div>
-				<div class="bus-info" id="bus-info-6">to_downtown: 6:34 PM (2m late)<br>from_downtown: 6:38 PM (on time)</div>
-		</div>
-		<div class="route" data-route="11">
-				<div class="bus-id">11</div>
-				<div class="bus-info" id="bus-info-11">to_downtown: 8:02 PM (2m late)<br>from_downtown: 7:28 PM (on time)</div>
-		</div>
-		<div class="route" data-route="13">
-				<div class="bus-id">13</div>
-				<div class="bus-info" id="bus-info-13">to_downtown: 6:44 PM (2m late)<br>from_downtown: 6:39 PM (on time)</div>
-		</div>
-		<div class="route" data-route="23">
-				<div class="bus-id">23</div>
-				<div class="bus-info" id="bus-info-23">Maroon Line: 7:05 AM (2m late)<br>Gold Line: 7:12 AM (on time)</div>
-		</div>
-		<script src="/ui.js"></script>
-		<script>
-			setInterval(updateClock, 100);
-			setInterval(updateRoutes, 5000);
-		</script>
-	</body>
+		[data-route="6"] {
+			background-color: rgba(0, 0, 128, 0.2);
+		}
+
+		[data-route="11"] {
+			background-color: rgba(235, 235, 35, 0.2);
+		}
+
+		[data-route="13"] {
+			background-color: rgba(34, 139, 34, 0.2);
+		}
+
+		[data-route="23"] {
+			background-color: rgba(128, 0, 0, 0.2);
+		}
+	</style>
+</head>
+
+<body style="height:100%; width: 480px;">
+	<div id="header">
+		<div id="clock" class="right">Loading time...</a></div>
+	</div>
+	<div class="route" data-route="6">
+		<div class="bus-id">6</div>
+		<div class="bus-info" id="bus-info-6">to_downtown: 6:34 PM (2m late)<br>from_downtown: 6:38 PM (on time)</div>
+	</div>
+	<div class="route" data-route="11">
+		<div class="bus-id">11</div>
+		<div class="bus-info" id="bus-info-11">to_downtown: 8:02 PM (2m late)<br>from_downtown: 7:28 PM (on time)</div>
+	</div>
+	<div class="route" data-route="13">
+		<div class="bus-id">13</div>
+		<div class="bus-info" id="bus-info-13">to_downtown: 6:44 PM (2m late)<br>from_downtown: 6:39 PM (on time)</div>
+	</div>
+	<div class="route" data-route="23">
+		<div class="bus-id">23</div>
+		<div class="bus-info" id="bus-info-23">Maroon Line: 7:05 AM (2m late)<br>Gold Line: 7:12 AM (on time)</div>
+	</div>
+	<script src="/ui.js"></script>
+	<script>
+		setInterval(updateClock, 100);
+		setInterval(updateRoutes, 5000);
+	</script>
+</body>
+
 </html>
