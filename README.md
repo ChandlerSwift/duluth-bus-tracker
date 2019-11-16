@@ -18,5 +18,5 @@ We also need `python3`, `pip(3)`, and `pipenv`:
 sudo apt install python3 python3-pip
 pip3 install pipenv
 export PATH=$PATH:$HOME/.local/bin
-pipenv install
+sudo pipenv install # since we're running the pipenv as root, we need to install it as root
 ```
