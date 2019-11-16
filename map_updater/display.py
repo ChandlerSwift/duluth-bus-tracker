@@ -13,7 +13,7 @@ strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRI
 strip.begin()
 
 def show(led: int, color: Tuple[int, int, int]):
-    strip.setPixelColor(led, Color(color[0], color[1], color[2])) # Do I really have to unpack this tuple?
+    strip.setPixelColor(led, Color(color[1], color[0], color[2])) # Values are GRB, so switch the first two
     strip.show()
 
 def clear():
