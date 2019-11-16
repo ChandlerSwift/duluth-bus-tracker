@@ -1,5 +1,6 @@
 import api_consumer
 import map_updater.display
+from typing import Tuple
 
 ALL_ROUTES = ["6", "11", "13", "23"]
 
@@ -55,7 +56,7 @@ def update_map():
     # If we're only showing one map, highlight all the stops
     if len(shown_routes) is 1:
         for stop in route_stops[shown_routes[0]]:
-            show_stop(stop, 0.1)
+            show_stop(stop, (2,10,2))
     #for bus in api_consumer.get_buses(shown_routes):
     #    bus_location = location(bus.lat, bus.long)
     #    show_stop(find_nearest_stop(bus_location))
@@ -64,8 +65,8 @@ def update_map():
 def clear_map():
     display.clear()
 
-def show_stop(stop, brightness: float = 1.0):
-    display.show(stop['led'], (int(255 * brightness), int(255 * brightness), int(255 * brightness)))
+def show_stop(stop, color: Tuple[int, int, int] = (255,255,255)):
+    display.show(stop['led'], color)
 
 def show_route(route: str):
     global shown_routes
