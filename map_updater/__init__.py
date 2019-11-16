@@ -1,24 +1,15 @@
 import api_consumer
-import map_updater.display
+import map_updater.display import strip
+from rpi_ws281x import Color
 from typing import Tuple
+import json
 
-ALL_ROUTES = ["6", "11", "13", "23"]
+ALL_ROUTE_NUMBERS = ["6", "11", "13", "23"]
 
-shown_routes = []
+shown_route_numbers = [] # Updated by UI
 
-route_stops = {
-    "6": [],
-    "11": [],
-    "13": [{"lat":0,"long":0,"led":x} for x in range(50)],
-    "23": [],
-}
-
-# stop = {
-#   "led": 1,
-#   "lat": 54.2533710,
-#   "long": 62.8501745,
-#   "name": "12th Ave and 4th St",
-# }
+with open('routes.json') as routes_file:
+    routes = json.loads(routes_file.read())
 
 
 class location(object):
@@ -39,7 +30,8 @@ def find_nearest_stop(route: str, bus_location: location):
     few other issues like hills, which present much larger discrepancies than
     the curvature of the Earth.
 
-    Plus, the Earth is flat anyway.
+    Plus, the Earth is flat anyway. Wake up, sheeple.
+    xkcd.com/{1013,1318}
     '''
     closest_stop = route_stops[route][0]
     for route in route_stops:
@@ -49,24 +41,22 @@ def find_nearest_stop(route: str, bus_location: location):
     return closest_stop
 
 def update_map():
-    clear_map()
+    for i in range(strip.numPixels()): # or LED_COUNT
+        strip.setPixelColor(i, Color(0,0,0))
 
-    # TODO: set colors
+    # TODO: set colors per-route
 
     # If we're only showing one map, highlight all the stops
     if len(shown_routes) is 1:
-        for stop in route_stops[shown_routes[0]]:
-            show_stop(stop, (2,10,2))
+        for stop in routes[shown_routes[0]]:
+            strip.setPixelColor(stop, Color(2,10,2))
     #for bus in api_consumer.get_buses(shown_routes):
     #    bus_location = location(bus.lat, bus.long)
     #    show_stop(find_nearest_stop(bus_location))
-    show_stop({"led":20})
+    strip.setPixelColor(20, Color(255,255,255))
 
 def clear_map():
     display.clear()
-
-def show_stop(stop, color: Tuple[int, int, int] = (255,255,255)):
-    display.show(stop['led'], color)
 
 def show_route(route: str):
     global shown_routes
