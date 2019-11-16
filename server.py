@@ -24,16 +24,15 @@ def schedule_next_update():
 	next_call += MAP_UPDATE_INTERVAL
 	threading.Timer(next_call - time.time(), schedule_next_update).start()
 
-@app.route('/api/get-buses')
-def get_buses():
-	return '{"bus":"bus"}'
-	#return api_consumer.get_buses(RELEVANT_BUSES)
+@app.route('/api/get-upcoming-departures')
+def get_upcoming_departures():
+	return api_consumer.get_upcoming_departures(RELEVANT_BUSES)
 
 @app.route('/api/show_route/<int:route>')
 def show_route(route: int):
 	map_updater.show_route(route)
 
-@app.route('/api/show_route/all')
+@app.route('/api/show_all_routes')
 def show_all_routes():
 	map_updater.show_all_routes()
 

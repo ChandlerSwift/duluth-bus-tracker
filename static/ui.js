@@ -4,7 +4,7 @@ function updateClock() {
 
 async function updateRoutes() {
     // NONE OF THIS WORKS. We're confusing buses with upcoming stop times. Out of scope?
-    let res = await fetch('/api/get-upcoming-buses');
+    let res = await fetch('/api/get-upcoming-departures');
     let buses = await res.json();
     for (let bus of buses) {
         let bus_info_div;
