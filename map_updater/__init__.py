@@ -54,6 +54,7 @@ def update_map():
     #    bus_location = location(bus.lat, bus.long)
     #    show_stop(find_nearest_stop(bus_location))
     strip.setPixelColor(20, Color(255,255,255))
+    strip.show()
 
 def clear_map():
     display.clear()
