@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask, send_from_directory
-import map_updater
+from map_updater import MapUpdater
 import api_consumer
 import threading
 import time
@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 MAP_UPDATE_INTERVAL = 5 # second
 RELEVANT_BUSES = ["6", "11", "11K", "13", "23"]
+
+map_updater = MapUpdater()
 
 @app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path:path>')

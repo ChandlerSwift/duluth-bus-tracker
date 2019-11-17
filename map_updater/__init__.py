@@ -16,7 +16,7 @@ class Location(object):
         self.long = long
 
     @staticmethod
-    def distance(pos1: Location, pos2: Location):
+    def distance(pos1, pos2):
         diff_x = pos1.lat - pos2.lat
         diff_y = pos1.long - pos2.long
         return (diff_x**2 + diff_y**2)**0.5
