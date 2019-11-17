@@ -1,5 +1,5 @@
 import api_consumer
-import map_updater.display import strip
+from map_updater.display import strip
 from rpi_ws281x import Color
 from typing import Tuple
 import json
