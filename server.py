@@ -29,7 +29,7 @@ def get_upcoming_departures():
 	return "[]"
 	return api_consumer.get_upcoming_departures(RELEVANT_BUSES)
 
-@app.route('/api/show_route/<str:route>')
+@app.route('/api/show_route/<route>')
 def show_route(route: str):
 	map_updater.show_route(route)
 

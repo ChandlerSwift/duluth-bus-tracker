@@ -6,7 +6,7 @@ import json
 
 ALL_ROUTE_NUMBERS = ["6", "11", "13", "23"]
 
-shown_route_numbers = [] # Updated by UI
+shown_route_numbers = ALL_ROUTE_NUMBERS # Updated by UI
 
 with open('routes.json') as routes_file:
     routes = json.loads(routes_file.read())
