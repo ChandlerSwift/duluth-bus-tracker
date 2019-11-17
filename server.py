@@ -31,13 +31,15 @@ def get_upcoming_departures():
 	return "[]"
 	return api_consumer.get_upcoming_departures(RELEVANT_BUSES)
 
-@app.route('/api/show_route/<route>')
+@app.route('/api/show-route/<string:route>')
 def show_route(route: str):
 	map_updater.show_route(route)
+	return '', 204
 
-@app.route('/api/show_all_routes')
+@app.route('/api/show-all-routes')
 def show_all_routes():
 	map_updater.show_all_routes()
+	return '', 204
 
 if __name__ == '__main__':
 	schedule_next_update()

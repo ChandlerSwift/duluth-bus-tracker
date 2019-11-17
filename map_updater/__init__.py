@@ -7,12 +7,10 @@ import os
 
 ALL_ROUTE_NUMBERS = ["6", "11", "13", "23"]
 
-shown_route_numbers = ALL_ROUTE_NUMBERS # Updated by UI
-
 
 class Location(object):
     def __init__(self, lat, long):
-        self.lat = lat
+        self.lat = lat0
         self.long = long
 
     @staticmethod
@@ -27,6 +25,9 @@ class MapUpdater:
     def __init__(self):
         with open(os.path.join(os.path.dirname(__file__), 'routes.json')) as routes_file:
             self.routes = json.loads(routes_file.read())
+        self.shown_route_numbers = ALL_ROUTE_NUMBERS # Updated by UI
+        # TODO: remove:
+        #self.routes = {"13": {"stops": []}}
 
     def find_nearest_stop(self, route: str, bus_location: Location):
         '''
@@ -51,19 +52,27 @@ class MapUpdater:
             strip.setPixelColor(i, Color(0,0,0))
 
         # If we're only showing one map, highlight all the stops
-        if len(shown_route_numbers) is 1:
-            for stop in self.routes[shown_route_numbers[0]]['stops']:
-                strip.setPixelColor(stop, Color(2,10,2))
+        if len(self.shown_route_numbers) is 1:
+            for stop in self.routes[self.shown_route_numbers[0]]['stops']:
+                strip.setPixelColor(stop['led'], Color(10,2,2))
+            strip.setPixelColor(20, Color(255,255,255))
+        else:
+            strip.setPixelColor(20, Color(255,10,10))
+            strip.setPixelColor(2, Color(10,255,10))
         #for bus in api_consumer.get_buses(shown_routes):
         #    bus_location = Location(bus.lat, bus.long)
         #    show_stop(find_nearest_stop(bus_location))
-        strip.setPixelColor(20, Color(255,255,255))
         strip.show()
 
     def show_route(self, route: str):
+        print("In show_route, previously showing %s" % self.shown_route_numbers)
         self.shown_route_numbers = [route]
+        print("Now showing %s" % self.shown_route_numbers)
+
         self.update_map()
 
     def show_all_routes(self):
+        print("In show_all_routes, previously showing %s" % self.shown_route_numbers)
         self.shown_route_numbers = ALL_ROUTE_NUMBERS
+        print("Now showing %s" % self.shown_route_numbers)
         self.update_map()
