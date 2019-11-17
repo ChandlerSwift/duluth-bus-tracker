@@ -3,6 +3,7 @@ from .display import strip
 from rpi_ws281x import Color
 from typing import Tuple
 import json
+import os
 
 ALL_ROUTE_NUMBERS = ["6", "11", "13", "23"]
 
@@ -24,7 +25,7 @@ class Location(object):
 class MapUpdater:
 
     def __init__(self):
-        with open('routes.json') as routes_file:
+        with open(os.path.join(os.path.dirname(__file__), 'routes.json')) as routes_file:
             self.routes = json.loads(routes_file.read())
 
     def find_nearest_stop(self, route: str, bus_location: Location):
