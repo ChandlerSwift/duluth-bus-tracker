@@ -59,15 +59,10 @@ class MapUpdater:
         strip.setPixelColor(20, Color(255,255,255))
         strip.show()
 
-    def clear_map():
-        display.clear()
+    def show_route(self, route: str):
+        self.shown_route_numbers = [route]
+        self.update_map()
 
-    def show_route(route: str):
-        global shown_route_numbers
-        shown_route_numbers = [route]
-        update_map()
-
-    def show_all_routes():
-        global shown_route_numbers
-        shown_route_numbers = ALL_ROUTES
-        update_map()
+    def show_all_routes(self):
+        self.shown_route_numbers = ALL_ROUTE_NUMBERS
+        self.update_map()
