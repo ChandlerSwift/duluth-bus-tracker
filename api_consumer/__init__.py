@@ -59,7 +59,7 @@ def get_upcoming_departures(*routes_to_check: str):
                             'direction': stop_detail[stop['stop_id']][route_id], 
                             'time': stop['departure']['time']
                             })
-    return upcoming_departures
+    return latest_of(upcoming_departures)
 
 def latest_of(upcoming_departures):
     """

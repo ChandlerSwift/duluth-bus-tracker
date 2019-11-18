@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, jsonify
 from map_updater import MapUpdater
 import api_consumer
 import threading
@@ -28,7 +28,7 @@ def schedule_next_update():
 
 @app.route('/api/get-upcoming-departures')
 def get_upcoming_departures():
-	return api_consumer.get_upcoming_departures(RELEVANT_BUSES)
+	return jsonify(api_consumer.get_upcoming_departures(*RELEVANT_BUSES))
 
 @app.route('/api/show-route/<string:route>')
 def show_route(route: str):
