@@ -9,6 +9,7 @@ async function updateRoutes() {
         info_div.innerHTML = "";
     }
     for (let bus of buses) {
+        if (bus.route == "11K") bus.route = "11";
         let info_div = document.getElementById(`bus-info-${bus.route}`)
         let departure_time = new Date(bus.time * 1000); // milliseconds after epoch
         let departure_time_string = departure_time.toLocaleTimeString(); // TODO: remove seconds
