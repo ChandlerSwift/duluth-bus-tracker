@@ -3,17 +3,22 @@ function updateClock() {
 }
 
 async function updateRoutes() {
-    // NONE OF THIS WORKS. We're confusing buses with upcoming stop times. Out of scope?
     let res = await fetch('/api/get-upcoming-departures');
     let buses = await res.json();
+    for (let info_div of document.getElementsByClassName('bus-info')) {
+        info_div.innerHTML = "";
+    }
     for (let bus of buses) {
-        let bus_info_div;
-        for (let el of document.getElementsByClassName("bus-id")) {
-            if (el.innerHTML == bus.route) {
-                bus_div = el.parentElement.getElementsByClassName("bus-info")[0];
-            }
+        if (bus.route == "11K") bus.route = "11";
+        let info_div = document.getElementById(`bus-info-${bus.route}`)
+        let departure_time = new Date(bus.time * 1000); // milliseconds after epoch
+        let departure_time_string = departure_time.toLocaleTimeString(); // TODO: remove seconds
+        info_div.innerHTML += `${bus.direction}: ${departure_time_string}<br>`;
+    }
+    for (let info_div of document.getElementsByClassName('bus-info')) {
+        if (info_div.innerHTML == "") {
+            info_div.innerHTML = "No upcoming departures.";
         }
-        bus_info_div.innerHTML = `to_downtown: ${"6:34 PM"} (${"2m late"})<br>from_downtown: ${"6:38 PM"} (${"on time"})`
     }
 }
 
