@@ -7,7 +7,7 @@ import time
 
 app = Flask(__name__)
 
-MAP_UPDATE_INTERVAL = 5 # second
+MAP_UPDATE_INTERVAL = 10 # seconds
 RELEVANT_BUSES = ["6", "11", "11K", "13", "23"]
 
 map_updater = MapUpdater()
@@ -19,6 +19,7 @@ def index(path):
 
 next_call = time.time() + MAP_UPDATE_INTERVAL
 def schedule_next_update():
+	print('Updating map...')
 	map_updater.update_map()
 
 	# schedule next update
