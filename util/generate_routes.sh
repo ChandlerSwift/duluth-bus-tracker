@@ -63,21 +63,36 @@ echo "Processing complete! $(cat stop_data | wc -l) stops processed."
 #fi
 #############################
 
+if test -f routes.json; then
+    read -n 1 -r -p "Warning, routes.json exists. Data will be overwritten. Is this okay? [y/n] "
+    echo
+    if [[ $REPLY =~ ^[Nn]$ ]]; then
+        echo "Aborting"
+        exit
+    fi
+fi
+
 echo "Exporting stop data as JSON..."
-# We can't just python<<EOF because we need stdin for LED assignment.
+# We can't just `python3 <<EOF` because we need stdin for LED assignment.
 cat > json_generator.py <<EOF
 import csv
 import json
-
-filename=input("Where would you like to save the json file? ")
 
 with open('stop_data') as stop_data_file:
     reader = csv.DictReader(stop_data_file)
     stops = list(reader)
 
+# If we input names once, then we don't have to worry about entering in the
+# same stop twice.
+stop_names = {stop['name'] for stop in stops} # creates a set
+print("Filtered stops: down to %s from %s." % (len(stop_names), len(stops)))
+stop_leds = {}
+for stop_name in sorted(stop_names):
+   stop_leds[stop_name] = input(stop_name.ljust(20) + ": ")
+
 for stop in stops:
-    stop_led = input(stop['name'].ljust(20) + ": ")
-    stop['led'] = int(stop_led) if stop_led is not "" else 0
+    stop_led = stop_leds[stop['name']]
+    stop['led'] = int(stop_led) if stop_led is not "" else 120 # something off the end that won't get lit
     stop['lat'] = float(stop['lat'])
     stop['long'] = float(stop['long'])
 
@@ -95,8 +110,8 @@ for route in routes:
     for stop in stops:
         if stop['route'] == route['route_id']:
             output_routes[route['route_id']]['stops'].append(stop)
-with open(filename, 'w') as f:
- f.write(json.dumps(output_routes))
+with open('routes.json', 'w') as f:
+    f.write(json.dumps(output_routes))
 EOF
 python3 json_generator.py
 
