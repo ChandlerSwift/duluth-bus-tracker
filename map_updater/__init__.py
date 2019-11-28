@@ -5,19 +5,14 @@ from typing import Tuple
 import json
 import os
 
-ALL_ROUTE_NUMBERS = ["6", "11", "13", "23"]
+ALL_ROUTE_NUMBERS = ["6", "11", "11K", "13", "23"]
 
 
-class Location(object):
-    def __init__(self, lat, long):
-        self.lat = lat0
-        self.long = long
 
-    @staticmethod
-    def distance(pos1, pos2):
-        diff_x = pos1.lat - pos2.lat
-        diff_y = pos1.long - pos2.long
-        return (diff_x**2 + diff_y**2)**0.5
+def distance_between(obj1, obj2):
+    diff_x = obj1['lat'] - obj2['lat']
+    diff_y = obj1['long'] - obj2['long']
+    return (diff_x**2 + diff_y**2)**0.5
 
 
 class MapUpdater:
@@ -26,10 +21,8 @@ class MapUpdater:
         with open(os.path.join(os.path.dirname(__file__), 'routes.json')) as routes_file:
             self.routes = json.loads(routes_file.read())
         self.shown_route_numbers = ALL_ROUTE_NUMBERS # Updated by UI
-        # TODO: remove:
-        #self.routes = {"13": {"stops": []}}
 
-    def find_nearest_stop(self, route: str, bus_location: Location):
+    def find_nearest_stop(self, route_name: str, bus_location):
         '''
         Yes, Jeff, this is wrong. I _do_ understand that lines of latitude and
         longitude are not perpendicular, nor square. However, Duluth has quite a
@@ -39,40 +32,43 @@ class MapUpdater:
         Plus, the Earth is flat anyway. Wake up, sheeple.
         xkcd.com/{1013,1318}
         '''
-        closest_stop = self.routes[route]['stops'][0]
-        for route in self.routes:
-            for stop in route['stops']:
-                if Location.distance(bus_location, stop) < Location.distance(bus_location, closest_stop):
-                    closest_stop = stop
+        route = self.routes[route_name]
+        closest_stop = route['stops'][0]
+        for stop in route['stops']:
+            if distance_between(bus_location, stop) < distance_between(bus_location, closest_stop):
+                closest_stop = stop
         return closest_stop
 
     def update_map(self):
-        # Start as 
-        for i in range(strip.numPixels()): # or LED_COUNT
+        # Start with blank board
+        for i in range(strip.numPixels()):  # or LED_COUNT
             strip.setPixelColor(i, Color(0,0,0))
 
-        # If we're only showing one map, highlight all the stops
+        # If we're only showing one route, highlight all the stops on that route
         if len(self.shown_route_numbers) is 1:
             for stop in self.routes[self.shown_route_numbers[0]]['stops']:
-                strip.setPixelColor(stop['led'], Color(10,2,2))
-            strip.setPixelColor(20, Color(255,255,255))
-        else:
-            strip.setPixelColor(20, Color(255,10,10))
-            strip.setPixelColor(2, Color(10,255,10))
-        #for bus in api_consumer.get_buses(shown_routes):
-        #    bus_location = Location(bus.lat, bus.long)
-        #    show_stop(find_nearest_stop(bus_location))
+                strip.setPixelColor(stop['led'], Color(4, 4, 4))
+
+        # Show vehicles
+        for bus in api_consumer.get_buses(*self.shown_route_numbers):
+            print(bus)
+            bus_led = self.find_nearest_stop(bus['route'], bus)['led']
+            bus_color = self.routes[bus['route']]['color']
+            bus_color = Color(bus_color[1], bus_color[0], bus_color[2])  # GRB
+            strip.setPixelColor(bus_led, bus_color)
+
+        # Finally, flush the changes to the board!
         strip.show()
 
     def show_route(self, route: str):
-        print("In show_route, previously showing %s" % self.shown_route_numbers)
         self.shown_route_numbers = [route]
-        print("Now showing %s" % self.shown_route_numbers)
+        if route == "11":
+            self.shown_route_numbers = ["11K"] # Hackety hack hack, TODO: remove
+        print("Showing %s" % self.shown_route_numbers)
 
         self.update_map()
 
     def show_all_routes(self):
-        print("In show_all_routes, previously showing %s" % self.shown_route_numbers)
         self.shown_route_numbers = ALL_ROUTE_NUMBERS
-        print("Now showing %s" % self.shown_route_numbers)
+        print("Showing %s" % self.shown_route_numbers)
         self.update_map()

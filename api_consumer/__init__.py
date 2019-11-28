@@ -21,17 +21,11 @@ def get_buses(*routes: str):
     with urllib.request.urlopen(VEHICLE_POSITION_DATA_URL) as url:
         buses = json.loads(url.read().decode())['entity']
 
-    print(routes)
     relevant_buses = []
     for bus in buses:
         if bus['vehicle']['trip']['route_id'] in routes:
             relevant_buses.append(make_bus_object(bus))
     return relevant_buses
-
-def get_bus_data():
-    bus_data = None
-    json.loads("")
-    return bus_data
 
 def get_upcoming_departures(*routes_to_check: str):
     upcoming_departures = []
