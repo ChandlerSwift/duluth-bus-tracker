@@ -7,7 +7,7 @@ import time
 
 app = Flask(__name__)
 
-MAP_UPDATE_INTERVAL = 10 # seconds
+MAP_UPDATE_INTERVAL = 15 # seconds
 RELEVANT_BUSES = ["6", "11", "11K", "13", "23"]
 
 map_updater = MapUpdater()
@@ -17,18 +17,19 @@ map_updater = MapUpdater()
 def index(path):
 	return send_from_directory('static', path)
 
-next_call = time.time() + MAP_UPDATE_INTERVAL
-def schedule_next_update():
-	print('Updating map...')
-	map_updater.update_map()
-
-	# schedule next update
-	global next_call
-	next_call += MAP_UPDATE_INTERVAL
-	threading.Timer(next_call - time.time(), schedule_next_update).start()
+#next_call = time.time() + MAP_UPDATE_INTERVAL
+#def schedule_next_update():
+#	print('Updating map...')
+#	map_updater.update_map()
+#
+#	# schedule next update
+#	global next_call
+#	next_call += MAP_UPDATE_INTERVAL
+#	threading.Timer(next_call - time.time(), schedule_next_update).start()
 
 @app.route('/api/get-upcoming-departures')
 def get_upcoming_departures():
+	map_updater.update_map()
 	return jsonify(api_consumer.get_upcoming_departures(*RELEVANT_BUSES))
 
 @app.route('/api/show-route/<string:route>')
