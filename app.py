@@ -43,5 +43,5 @@ def show_all_routes():
 	return '', 204
 
 if __name__ == '__main__':
-	schedule_next_update()
+	#schedule_next_update()
 	app.run()
