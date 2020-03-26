@@ -1,13 +1,6 @@
 # Duluth Bus Tracker 
-### (For Keeping Track of Buses in Duluth)
 
-Backend for the sign that is going to display where the buses are in Duluth!
-
-Raspberry pi display uses ui.html to display information on bus times
-
-[DTA bus API info](https://www.duluthtransit.com/home/doing-business/developer-resources/)
-
-### Installation Notes
+### Software Installation Notes
 When installing, the lights are driven over PWM on GPIO12. This normally
 requires root access to read/write `/dev/mem`. Instead, since it's difficult
 to run some of the other components as root, we allow the user (`pi` in this
@@ -39,3 +32,17 @@ personally tend to prefer the `tmux` method since it allows me to view the
 output of both, though the startup script does output logs to a file. It also
 allows me to individually start/stop/restart the services, which is helpful
 during development.
+
+### Hardware Setup Notes
+For hardware, all we expect is a string of individually addressable WS2811 LEDs
+on GPIO12. (Make sure they're sufficiently powered! While we usually only have a
+few LEDs on at a time, there is the option to light up a while route worth of
+lights, which may draw significantly more power.)
+
+In addition to the map, I use the Raspberry Pi on which this runs, plus a 3.5"
+touchscreen for the UI. Setup for this was minimal, though it didn't _quite_
+work out of the box. Unfortunately, I didn't take notes as I went.
+
+### Links
+[DTA bus API info](https://www.duluthtransit.com/home/doing-business/developer-resources/)
+[Photos of the setup](https://photos.app.goo.gl/oMXnoJ3bG1ESuEWR6)
