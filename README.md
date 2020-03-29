@@ -44,5 +44,5 @@ touchscreen for the UI. Setup for this was minimal, though it didn't _quite_
 work out of the box. Unfortunately, I didn't take notes as I went.
 
 ### Links
-[DTA bus API info](https://www.duluthtransit.com/home/doing-business/developer-resources/)
-[Photos of the setup](https://photos.app.goo.gl/oMXnoJ3bG1ESuEWR6)
+ * [DTA bus API info](https://www.duluthtransit.com/home/doing-business/developer-resources/)
+ * [Photos of the setup](https://photos.app.goo.gl/oMXnoJ3bG1ESuEWR6)
